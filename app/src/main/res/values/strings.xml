@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EVO_test_project</string>
+    <string name="notes">Notes</string>
+    <string name="what_do_you_want_to_note">What do you want to note?</string>
 </resources>
