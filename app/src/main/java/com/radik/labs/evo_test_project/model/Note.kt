@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Note(
-    @PrimaryKey(autoGenerate = true) var id: Long,
     var text: String,
-    var createTimeMillis: Long
+    var createTimeMillis: Long,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0
 )
