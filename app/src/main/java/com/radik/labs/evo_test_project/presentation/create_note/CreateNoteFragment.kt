@@ -1,21 +1,20 @@
 package com.radik.labs.evo_test_project.presentation.create_note
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import com.radik.labs.evo_test_project.R
+import com.radik.labs.evo_test_project.di.scopes.FragmentScope
 import com.radik.labs.evo_test_project.presentation.base.ToolbarFragment
-import com.radik.labs.evo_test_project.di.ViewModelFactory
 import kotlinx.android.synthetic.main.add_note_fragment.*
 import kotlinx.android.synthetic.main.add_note_fragment_toolbar.*
 import javax.inject.Inject
 
+@FragmentScope
 class CreateNoteFragment : ToolbarFragment() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var crateNoteViewModel: CreateNoteViewModel
+    lateinit var crateNoteViewModel: CreateNoteViewModel
 
     override fun toolbarLayoutRes(): Int = R.layout.add_note_fragment_toolbar
 
@@ -23,7 +22,6 @@ class CreateNoteFragment : ToolbarFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        crateNoteViewModel = ViewModelProviders.of(this, viewModelFactory).get(CreateNoteViewModel::class.java)
         initViews()
     }
 

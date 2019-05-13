@@ -10,7 +10,13 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class CreateNoteViewModel @Inject constructor(val appDatabase: AppDatabase): ViewModel() {
+class CreateNoteViewModel @Inject constructor(): ViewModel() {
+
+    @Inject lateinit var appDatabase: AppDatabase
+
+    init {
+        Log.e("testing", "Init CreateViewModel")
+    }
 
     private var disposable: Disposable? = null
 
@@ -30,6 +36,7 @@ class CreateNoteViewModel @Inject constructor(val appDatabase: AppDatabase): Vie
     }
 
     override fun onCleared() {
+        Log.e("testing", "Clear CreateViewModel")
         disposable?.dispose()
         super.onCleared()
     }

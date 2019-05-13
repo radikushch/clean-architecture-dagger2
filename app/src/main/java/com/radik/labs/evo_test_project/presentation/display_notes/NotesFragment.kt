@@ -6,16 +6,16 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.radik.labs.evo_test_project.R
+import com.radik.labs.evo_test_project.di.scopes.FragmentScope
 import com.radik.labs.evo_test_project.presentation.base.ToolbarFragment
-import com.radik.labs.evo_test_project.di.ViewModelFactory
 import com.radik.labs.evo_test_project.model.Note
 import kotlinx.android.synthetic.main.notes_fragment.*
 import javax.inject.Inject
 
+@FragmentScope
 class NotesFragment : ToolbarFragment(){
 
-    @Inject lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var notesViewModel: NotesViewModel
+    @Inject lateinit var notesViewModel: NotesViewModel
 
     override fun toolbarLayoutRes(): Int = R.layout.notes_fragment_toolbar
 
@@ -23,7 +23,6 @@ class NotesFragment : ToolbarFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        notesViewModel = ViewModelProviders.of(this, viewModelFactory).get(NotesViewModel::class.java)
         initViews()
         notesViewModel.create()
         notesViewModel.resLiveData.observe(this, Observer {t(it)})
