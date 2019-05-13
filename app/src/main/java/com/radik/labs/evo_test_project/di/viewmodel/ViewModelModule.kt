@@ -7,22 +7,26 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import androidx.lifecycle.ViewModelProvider
-import com.radik.labs.evo_test_project.di.ViewModelFactory
-import com.radik.labs.evo_test_project.di.ViewModelKey
+import com.radik.labs.evo_test_project.di.scopes.ActivityScope
+import com.radik.labs.evo_test_project.di.scopes.FragmentScope
+import javax.inject.Singleton
 
 @Module
 abstract class ViewModelModule {
 
+    @FragmentScope
     @Binds
     @IntoMap
     @ViewModelKey(NotesViewModel::class)
     abstract fun bindNotesViewModel(notesViewModel: NotesViewModel): ViewModel
 
+    @ActivityScope
     @Binds
     @IntoMap
     @ViewModelKey(CreateNoteViewModel::class)
     abstract fun bindCreateViewModel(createViewModel: CreateNoteViewModel): ViewModel
 
+    @Singleton
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

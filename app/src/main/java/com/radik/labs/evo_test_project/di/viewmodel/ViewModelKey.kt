@@ -1,4 +1,4 @@
-package com.radik.labs.evo_test_project.di
+package com.radik.labs.evo_test_project.di.viewmodel
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey
