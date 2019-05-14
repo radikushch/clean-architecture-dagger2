@@ -1,13 +1,11 @@
-package com.radik.labs.evo_test_project.di
+package com.radik.labs.evo_test_project.di.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import javax.inject.Singleton
 import javax.inject.Inject
 import javax.inject.Provider
+import javax.inject.Singleton
 
-
-@Singleton
 class ViewModelFactory @Inject constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) :
     ViewModelProvider.Factory {
 

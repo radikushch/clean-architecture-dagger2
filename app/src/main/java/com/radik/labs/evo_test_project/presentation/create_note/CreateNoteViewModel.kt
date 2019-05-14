@@ -12,6 +12,10 @@ import javax.inject.Inject
 
 class CreateNoteViewModel @Inject constructor(val appDatabase: AppDatabase): ViewModel() {
 
+    init {
+        Log.e("testing_di", "Init CreateNoteViewModel")
+    }
+
     private var disposable: Disposable? = null
 
     fun addNote(note: String) {
@@ -30,6 +34,7 @@ class CreateNoteViewModel @Inject constructor(val appDatabase: AppDatabase): Vie
     }
 
     override fun onCleared() {
+        Log.e("testing_di", "Clear CreateNoteViewModel")
         disposable?.dispose()
         super.onCleared()
     }

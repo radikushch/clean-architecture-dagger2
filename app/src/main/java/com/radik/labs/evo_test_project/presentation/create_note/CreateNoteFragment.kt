@@ -1,12 +1,12 @@
 package com.radik.labs.evo_test_project.presentation.create_note
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import com.radik.labs.evo_test_project.R
+import com.radik.labs.evo_test_project.di.scopes.FragmentScope
+import com.radik.labs.evo_test_project.di.viewmodel.ViewModelFactory
 import com.radik.labs.evo_test_project.presentation.base.ToolbarFragment
-import com.radik.labs.evo_test_project.di.ViewModelFactory
 import kotlinx.android.synthetic.main.add_note_fragment.*
 import kotlinx.android.synthetic.main.add_note_fragment_toolbar.*
 import javax.inject.Inject

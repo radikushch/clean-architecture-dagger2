@@ -2,7 +2,7 @@ package com.radik.labs.evo_test_project.di
 
 import android.app.Application
 import com.radik.labs.evo_test_project.NoteApplication
-import com.radik.labs.evo_test_project.di.activity.ActivityBindingModule
+import com.radik.labs.evo_test_project.di.activity.ActivitiesModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -12,10 +12,9 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    ContextModule::class,
     AppModule::class,
     AndroidInjectionModule::class,
-    ActivityBindingModule::class])
+    ActivitiesModule::class])
 interface AppComponent : AndroidInjector<DaggerApplication> {
 
     @Component.Builder

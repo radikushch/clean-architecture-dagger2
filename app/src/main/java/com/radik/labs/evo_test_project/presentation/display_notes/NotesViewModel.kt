@@ -13,6 +13,11 @@ import javax.inject.Inject
 
 class NotesViewModel @Inject constructor(val appDatabase: AppDatabase): ViewModel() {
 
+    init {
+        Log.e("testing_di", "Init NotesViewModel")
+    }
+
+
     private var disposable: Disposable? = null
 
     val resLiveData = MutableLiveData<List<Note>>()
@@ -32,6 +37,7 @@ class NotesViewModel @Inject constructor(val appDatabase: AppDatabase): ViewMode
     }
 
     override fun onCleared() {
+        Log.e("testing_di", "Clear NotesViewModel")
         disposable?.dispose()
         super.onCleared()
     }
