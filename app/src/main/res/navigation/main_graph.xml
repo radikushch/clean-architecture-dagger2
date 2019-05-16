@@ -18,7 +18,7 @@
     </fragment>
 
     <fragment android:id="@+id/createNoteFragment"
-              android:name="com.radik.labs.evo_test_project.presentation.create_note.CreateNoteFragment"
+              android:name="com.radik.labs.evo_test_project.presentation.create_note.EditNoteFragment"
               android:label="CreateNoteFragment"
               tools:layout="@layout/add_note_fragment"
     />

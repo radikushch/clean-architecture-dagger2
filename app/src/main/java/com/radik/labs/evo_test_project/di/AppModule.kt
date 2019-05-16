@@ -4,12 +4,12 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.radik.labs.evo_test_project.data.database.AppDatabase
-import com.radik.labs.evo_test_project.di.viewmodel.NotesViewModelModule
+import com.radik.labs.evo_test_project.di.viewmodel.ViewModelModule
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [ViewModelModule::class, NoteDaoModule::class])
 class AppModule {
 
     @Singleton

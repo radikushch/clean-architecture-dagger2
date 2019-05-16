@@ -4,11 +4,10 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.radik.labs.evo_test_project.di.scopes.ActivityScope
-import com.radik.labs.evo_test_project.presentation.base.ToolbarActivity
-import dagger.android.support.HasSupportFragmentInjector
+import com.radik.labs.evo_test_project.presentation.base.activities.HostFragmentActivity
 
 @ActivityScope
-class MainActivity : ToolbarActivity(){
+class MainActivity : HostFragmentActivity(){
 
     override fun layoutRes(): Int = R.layout.main_activity
 

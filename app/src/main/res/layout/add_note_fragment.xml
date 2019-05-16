@@ -5,12 +5,24 @@
         android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
 >
 
+    <include
+        android:id="@+id/add_note_toolbar_include"
+        layout="@layout/add_note_fragment_toolbar"
+
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+
+        app:layout_constraintTop_toTopOf="parent"
+    >
+
+    </include>
+
     <EditText
             android:id="@+id/add_note_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_note_toolbar_include"
             android:hint="@string/what_do_you_want_to_note"
 
             android:layout_margin="10dp"

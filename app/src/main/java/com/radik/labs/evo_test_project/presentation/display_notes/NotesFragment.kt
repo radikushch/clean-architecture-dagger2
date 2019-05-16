@@ -1,43 +1,80 @@
 package com.radik.labs.evo_test_project.presentation.display_notes
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.radik.labs.evo_test_project.R
 import com.radik.labs.evo_test_project.di.scopes.FragmentScope
-import com.radik.labs.evo_test_project.presentation.base.ToolbarFragment
 import com.radik.labs.evo_test_project.model.Note
+import com.radik.labs.evo_test_project.presentation.base.fragments.NavigationFragment
+import com.radik.labs.evo_test_project.presentation.display_notes.adapter.NoteAdapter
 import kotlinx.android.synthetic.main.notes_fragment.*
-import javax.inject.Inject
 
 @FragmentScope
-class NotesFragment : ToolbarFragment(){
+class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
 
-    @Inject lateinit var notesViewModel: NotesViewModel
+    override fun onNoteClick(note: Note) {
+        openEditNoteScreen(note)
+    }
 
-    override fun toolbarLayoutRes(): Int = R.layout.notes_fragment_toolbar
+    private fun openEditNoteScreen(note: Note) {
+        val bundle = Bundle().apply {
+            putSerializable(Note::class.java.simpleName, note)
+        }
+        navController.navigate(R.id.action_notesFragment_to_createNoteFragment, bundle)
+    }
+
+    private lateinit var notesViewModel: NotesViewModel
+    private lateinit var notesAdapter: NoteAdapter
 
     override fun layoutRes(): Int = R.layout.notes_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
-        notesViewModel.create()
-        notesViewModel.resLiveData.observe(this, Observer {t(it)})
+        notesViewModel = ViewModelProviders.of(this, viewModelFactory).get(NotesViewModel::class.java)
+        init()
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun t(list: List<Note>) {
-        var str = ""
-        list.forEach {
-            str  += it.toString() + "\n"
-        }
-        test.text = str
+    private fun init() {
+        initRecyclerView()
+        initListeners()
+        initLiveData()
     }
 
-    private fun initViews() {
+    private fun initLiveData() {
+        notesViewModel.notesLiveData.observe(this, Observer {notes -> updateNotesList(notes) })
+        notesViewModel.progressLiveData.observe(this, Observer { isShown -> displayProgress(isShown) })
+    }
+
+    private fun displayProgress(isShown: Boolean) {
+        if(isShown) showProgress()
+        else        hideProgress()
+    }
+
+    private fun updateNotesList(notes: List<Note>) {
+        notesAdapter.swapData(notes)
+    }
+
+    private fun initRecyclerView() {
+        notesAdapter = NoteAdapter(ArrayList(), this)
+        notes_recycler_view.layoutManager = LinearLayoutManager(hostActivity, RecyclerView.VERTICAL, false)
+        notes_recycler_view.adapter = notesAdapter
+    }
+
+    override fun onStart() {
+        super.onStart()
+        notesViewModel.start()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        notesViewModel.stop()
+    }
+
+    private fun initListeners() {
         notes_add_button.setOnClickListener { addNoteButtonClick() }
     }
 

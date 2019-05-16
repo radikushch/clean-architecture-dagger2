@@ -1,43 +1,49 @@
 package com.radik.labs.evo_test_project.presentation.display_notes
 
-import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.radik.labs.evo_test_project.data.database.AppDatabase
+import com.radik.labs.evo_test_project.domain.usecases.GetAllNotesUseCase
 import com.radik.labs.evo_test_project.model.Note
+import com.radik.labs.evo_test_project.presentation.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class NotesViewModel @Inject constructor(val appDatabase: AppDatabase): ViewModel() {
-
-    init {
-        Log.e("testing", "Init NotesViewModel")
-    }
+class NotesViewModel @Inject constructor(
+    private val getAllNotesUseCase: GetAllNotesUseCase
+): BaseViewModel() {
 
     private var disposable: Disposable? = null
 
-    val resLiveData = MutableLiveData<List<Note>>()
+    val notesLiveData = MutableLiveData<List<Note>>()
 
-    fun create() {
-        Handler().postDelayed({
-            disposable = appDatabase.noteDao().getNotes()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    resLiveData.postValue(it)
-                }, {
-                    Log.e("test", it.message)
-                })
-        }, 2000)
+    override fun start() {
+        loadNotes()
+    }
 
+    private fun loadNotes() {
+        disposable = getAllNotesUseCase.getAllNotes()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showProgress() }
+            .subscribe({
+                notesLiveData.postValue(it)
+                hideProgress()
+            }, {
+                Log.e("test", it.message)
+                hideProgress()
+            })
+    }
+
+    override fun stop() {
+        disposable?.dispose()
     }
 
     override fun onCleared() {
-        Log.e("testing", "Clear NotesViewModel")
-        disposable?.dispose()
+        disposable?.let { disp ->
+            if(!disp.isDisposed) disp.dispose()
+        }
         super.onCleared()
     }
 }
