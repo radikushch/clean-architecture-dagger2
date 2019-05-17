@@ -56,7 +56,7 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
     }
 
     private fun updateNotesList(notes: List<Note>) {
-        notesAdapter.swapData(notes)
+        notesAdapter.swapData(notes.reversed())
     }
 
     private fun initRecyclerView() {

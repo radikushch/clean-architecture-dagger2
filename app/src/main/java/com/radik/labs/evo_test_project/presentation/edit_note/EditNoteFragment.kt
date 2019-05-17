@@ -3,7 +3,6 @@ package com.radik.labs.evo_test_project.presentation.edit_note
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
-import com.radik.labs.evo_test_project.di.scopes.FragmentScope
 import com.radik.labs.evo_test_project.model.Note
 import com.radik.labs.evo_test_project.presentation.base.fragments.NavigationFragment
 import kotlinx.android.synthetic.main.edit_note_fragment.*
