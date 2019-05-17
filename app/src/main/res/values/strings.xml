@@ -4,4 +4,6 @@
     <string name="what_do_you_want_to_note">What do you want to note?</string>
     <string name="save">Save</string>
     <string name="update">Update</string>
+    <string name="edit">Edit</string>
+    <string name="share_using">Share with</string>
 </resources>

@@ -10,4 +10,6 @@ interface Repository<T> {
     fun getAll(): Single<List<T>>
 
     fun update(item: T): Completable
+
+    fun remove(item: T): Completable
 }

@@ -10,15 +10,15 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 @ActivityScope
-class GetSaveNotesInteractor @Inject constructor(
-    private val noteRepository: Repository<Note>
-) : GetAllUseCase<Note>, SaveUseCase<Note> {
+class GetSaveInteractor<T> @Inject constructor(
+    private val repository: Repository<T>
+) : GetAllUseCase<T>, SaveUseCase<T> {
 
-    override fun saveNote(note: Note): Completable {
-        return noteRepository.save(note)
+    override fun saveNote(note: T): Completable {
+        return repository.save(note)
     }
 
-    override fun getAllNotes(): Single<List<Note>> {
-        return noteRepository.getAll()
+    override fun getAllNotes(): Single<List<T>> {
+        return repository.getAll()
     }
 }

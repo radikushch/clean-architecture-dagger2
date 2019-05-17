@@ -1,9 +1,6 @@
 package com.radik.labs.evo_test_project.data.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.radik.labs.evo_test_project.model.Note
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -19,5 +16,8 @@ interface NoteDao {
 
     @Update
     fun updateNote(note: Note)
+
+    @Delete
+    fun removeNote(note: Note)
 
 }

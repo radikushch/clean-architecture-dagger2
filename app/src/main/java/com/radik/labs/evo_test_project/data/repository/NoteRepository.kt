@@ -13,6 +13,18 @@ class NoteRepository @Inject constructor(
     private val noteDao: NoteDao
 ) : Repository<Note> {
 
+
+    override fun remove(item: Note): Completable {
+        return Completable.create { emitter ->
+            try{
+                noteDao.removeNote(item)
+                emitter.onComplete()
+            }catch (exc: Exception) {
+                emitter.onError(exc)
+            }
+        }
+    }
+
     override fun update(item: Note): Completable {
         return Completable.create { emitter ->
             try{

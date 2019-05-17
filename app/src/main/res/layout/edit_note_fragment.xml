@@ -27,13 +27,17 @@
             app:layout_constraintEnd_toEndOf="parent"
 
             android:layout_margin="10dp"
+
+            android:enabled="false"
+            android:maxLines="30"
+            android:textColor="@drawable/enable_color_selector"
     />
 
 
 
 
     <Button
-            android:id="@+id/add_note_button"
+            android:id="@+id/edit_note_button"
             android:layout_width="100dp"
             android:layout_height="40dp"
 
@@ -44,7 +48,7 @@
 
             android:layout_marginBottom="40dp"
 
-            android:text="@string/update"
+            android:text="@string/edit"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
     />

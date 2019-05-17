@@ -36,14 +36,14 @@ class NotesViewModel @Inject constructor(
             })
     }
 
-    override fun stop() {
-        disposable?.dispose()
-    }
-
-    override fun onCleared() {
-        disposable?.let { disp ->
-            if(!disp.isDisposed) disp.dispose()
+        override fun stop() {
+            disposable?.dispose()
         }
-        super.onCleared()
-    }
+
+        override fun onCleared() {
+            disposable?.let { disp ->
+                if(!disp.isDisposed) disp.dispose()
+            }
+            super.onCleared()
+        }
 }

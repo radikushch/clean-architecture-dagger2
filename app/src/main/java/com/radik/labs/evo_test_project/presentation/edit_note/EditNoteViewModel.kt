@@ -1,14 +1,67 @@
 package com.radik.labs.evo_test_project.presentation.edit_note
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import com.radik.labs.evo_test_project.domain.usecases.RemoveUseCase
+import com.radik.labs.evo_test_project.domain.usecases.UpdateUseCase
+import com.radik.labs.evo_test_project.model.Note
+import com.radik.labs.evo_test_project.model.StorageResponse
 import com.radik.labs.evo_test_project.presentation.base.BaseViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class EditNoteViewModel @Inject constructor() : BaseViewModel() {
+class EditNoteViewModel @Inject constructor(
+    private val updateUseCase: UpdateUseCase<Note>,
+    private val removeUseCase: RemoveUseCase<Note>
+) : BaseViewModel() {
+
+    private var disposable: Disposable? = null
+    val completeLiveData = MutableLiveData<Pair<StorageResponse, String>>()
+    val errorLiveData = MutableLiveData<String>()
+
     override fun start() {
 
     }
 
     override fun stop() {
+        disposable?.dispose()
+    }
+
+    override fun onCleared() {
+        disposable?.let { disp ->
+            if(!disp.isDisposed) disp.dispose()
+        }
+        super.onCleared()
+    }
+
+    fun removeNote(note: Note) {
+        disposable = removeUseCase.remove(note)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    completeLiveData.postValue(Pair(StorageResponse.DELETE, "Note was remove"))
+                },
+                {
+                    errorLiveData.postValue("Unavailable to remove note")
+                }
+            )
+    }
+
+    fun updateNote(noteText: String, updatedNote: Note) {
+        updatedNote.text = noteText
+        updatedNote.createTimeMillis = System.currentTimeMillis()
+        disposable = updateUseCase.update(updatedNote)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    completeLiveData.postValue(Pair(StorageResponse.UPDATE, "Note was update"))
+                },
+                {
+                    errorLiveData.postValue("Unavailable to update note")
+                }
+            )
     }
 }

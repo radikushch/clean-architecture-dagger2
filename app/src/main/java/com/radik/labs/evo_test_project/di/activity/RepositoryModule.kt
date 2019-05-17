@@ -1,4 +1,4 @@
-package com.radik.labs.evo_test_project.di
+package com.radik.labs.evo_test_project.di.activity
 
 import com.radik.labs.evo_test_project.data.repository.NoteRepository
 import com.radik.labs.evo_test_project.data.repository.Repository

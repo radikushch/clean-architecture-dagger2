@@ -1,6 +1,7 @@
 package com.radik.labs.evo_test_project.presentation.create_note
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.radik.labs.evo_test_project.data.database.AppDatabase
 import com.radik.labs.evo_test_project.domain.usecases.SaveUseCase
@@ -25,8 +26,15 @@ class CreateNoteViewModel @Inject constructor(
     }
 
     private var disposable: Disposable? = null
+    val completeLiveData = MutableLiveData<Unit>()
+    val errorLiveData = MutableLiveData<String>()
+
 
     fun saveNote(noteText: String) {
+        if(noteText.isEmpty()){
+            errorLiveData.postValue("Error! Your note can't be saved")
+            return
+        }
         val note = Note(
             noteText,
             System.currentTimeMillis()
@@ -39,9 +47,9 @@ class CreateNoteViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Log.e("test", "complete")
+                completeLiveData.postValue(Unit)
             }, {
-                Log.e("test", it.message)
+                errorLiveData.postValue("Error! Your note can't be saved")
             })
 
     }
