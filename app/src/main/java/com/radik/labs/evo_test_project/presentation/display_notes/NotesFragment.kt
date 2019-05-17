@@ -10,7 +10,9 @@ import com.radik.labs.evo_test_project.R
 import com.radik.labs.evo_test_project.di.scopes.FragmentScope
 import com.radik.labs.evo_test_project.model.Note
 import com.radik.labs.evo_test_project.presentation.base.fragments.NavigationFragment
+import com.radik.labs.evo_test_project.presentation.create_note.CreateNoteFragment
 import com.radik.labs.evo_test_project.presentation.display_notes.adapter.NoteAdapter
+import com.radik.labs.evo_test_project.presentation.edit_note.EditNoteFragment
 import kotlinx.android.synthetic.main.notes_fragment.*
 
 @FragmentScope
@@ -21,10 +23,7 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
     }
 
     private fun openEditNoteScreen(note: Note) {
-        val bundle = Bundle().apply {
-            putSerializable(Note::class.java.simpleName, note)
-        }
-        navController.navigate(R.id.action_notesFragment_to_createNoteFragment, bundle)
+        navController.navigate(R.id.action_notesFragment_to_editNoteFragment, EditNoteFragment.newBundle(note))
     }
 
     private var notesViewModel: NotesViewModel? = null

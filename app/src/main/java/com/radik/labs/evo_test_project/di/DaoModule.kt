@@ -7,7 +7,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class NoteDaoModule {
+class DaoModule {
 
     @Singleton
     @Provides

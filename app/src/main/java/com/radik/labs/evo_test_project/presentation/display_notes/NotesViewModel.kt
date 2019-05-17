@@ -2,7 +2,7 @@ package com.radik.labs.evo_test_project.presentation.display_notes
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.radik.labs.evo_test_project.domain.usecases.GetAllNotesUseCase
+import com.radik.labs.evo_test_project.domain.usecases.GetAllUseCase
 import com.radik.labs.evo_test_project.model.Note
 import com.radik.labs.evo_test_project.presentation.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class NotesViewModel @Inject constructor(
-    private val getAllNotesUseCase: GetAllNotesUseCase
+    private val getAllNotesUseCase: GetAllUseCase<Note>
 ): BaseViewModel() {
 
     private var disposable: Disposable? = null

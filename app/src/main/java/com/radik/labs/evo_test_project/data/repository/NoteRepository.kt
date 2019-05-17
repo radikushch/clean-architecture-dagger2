@@ -13,12 +13,24 @@ class NoteRepository @Inject constructor(
     private val noteDao: NoteDao
 ) : Repository<Note> {
 
+    override fun update(item: Note): Completable {
+        return Completable.create { emitter ->
+            try{
+                noteDao.updateNote(item)
+                emitter.onComplete()
+            }catch (exc: Exception) {
+                emitter.onError(exc)
+            }
+        }
+    }
+
     override fun save(item: Note): Completable {
-        return Completable.create { emmiter ->
+        return Completable.create { emitter ->
             try{
                 noteDao.insertNote(item)
+                emitter.onComplete()
             }catch (exc: Exception) {
-                emmiter.onError(exc)
+                emitter.onError(exc)
             }
         }
     }
@@ -26,5 +38,4 @@ class NoteRepository @Inject constructor(
     override fun getAll(): Single<List<Note>> {
         return noteDao.getNotes()
     }
-
 }

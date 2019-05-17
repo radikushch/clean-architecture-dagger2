@@ -1,4 +1,4 @@
-package com.radik.labs.evo_test_project.presentation.create_note
+package com.radik.labs.evo_test_project.presentation.edit_note
 
 import androidx.lifecycle.ViewModel
 import com.radik.labs.evo_test_project.presentation.base.BaseViewModel

@@ -9,7 +9,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(includes = [ViewModelModule::class, NoteDaoModule::class])
+@Module(includes = [ViewModelModule::class, DaoModule::class])
 class AppModule {
 
     @Singleton
@@ -23,6 +23,8 @@ class AppModule {
             context,
             AppDatabase::class.java,
             "note-database"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }

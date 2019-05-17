@@ -3,6 +3,7 @@ package com.radik.labs.evo_test_project.presentation.create_note
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.radik.labs.evo_test_project.data.database.AppDatabase
+import com.radik.labs.evo_test_project.domain.usecases.SaveUseCase
 import com.radik.labs.evo_test_project.model.Note
 import com.radik.labs.evo_test_project.presentation.base.BaseViewModel
 import io.reactivex.Completable
@@ -11,24 +12,30 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class CreateNoteViewModel @Inject constructor(val appDatabase: AppDatabase): BaseViewModel() {
+class CreateNoteViewModel @Inject constructor(
+    private val saveUseCase: SaveUseCase<Note>
+): BaseViewModel() {
 
     override fun start() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun stop() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        disposable?.dispose()
     }
 
     private var disposable: Disposable? = null
 
-    fun addNote(note: String) {
-        disposable = Completable.fromAction {
-            appDatabase.noteDao().insertNote(Note(
-                note,
-                System.currentTimeMillis())
-            )}
+    fun saveNote(noteText: String) {
+        val note = Note(
+            noteText,
+            System.currentTimeMillis()
+        )
+        cashNote(note)
+    }
+
+    private fun cashNote(note: Note) {
+        disposable = saveUseCase.saveNote(note)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -36,10 +43,13 @@ class CreateNoteViewModel @Inject constructor(val appDatabase: AppDatabase): Bas
             }, {
                 Log.e("test", it.message)
             })
+
     }
 
     override fun onCleared() {
-        disposable?.dispose()
+        disposable?.let {
+            if(!it.isDisposed) it.dispose()
+        }
         super.onCleared()
     }
 }

@@ -43,7 +43,8 @@
 
             android:layout_marginTop="8dp"
             android:gravity="start"
-            tools:text="sflasasdasdasdasdasdasdasdasdasdasdasdsadasdasdasdasdasdasdasdasdasdasdasdasdasdasdfsf\nasfjafsjasfasfaf"
+            tools:text="dfdsdgsdgsdgsdgsg"
+            android:lines="2"
 
             app:layout_constraintHorizontal_bias="0.0"
     />

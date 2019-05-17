@@ -8,8 +8,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import androidx.lifecycle.ViewModelProvider
 import com.radik.labs.evo_test_project.di.scopes.FragmentScope
-import com.radik.labs.evo_test_project.presentation.base.BaseViewModel
-import com.radik.labs.evo_test_project.presentation.create_note.EditNoteViewModel
+import com.radik.labs.evo_test_project.presentation.edit_note.EditNoteViewModel
 import javax.inject.Singleton
 
 @Module

@@ -8,4 +8,6 @@ interface Repository<T> {
     fun save(item: T): Completable
 
     fun getAll(): Single<List<T>>
+
+    fun update(item: T): Completable
 }

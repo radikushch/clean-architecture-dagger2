@@ -6,27 +6,31 @@
 >
 
     <include
-        android:id="@+id/add_note_toolbar_include"
-        layout="@layout/add_note_fragment_toolbar"
+            android:id="@+id/edit_note_toolbar_include"
+            layout="@layout/edit_note_fragment_toolbar"
 
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
 
-        app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
     >
 
     </include>
 
     <EditText
-            android:id="@+id/add_note_edit_text"
+            android:id="@+id/edit_note_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toBottomOf="@id/add_note_toolbar_include"
-            android:hint="@string/what_do_you_want_to_note"
+            app:layout_constraintTop_toBottomOf="@id/edit_note_toolbar_include"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
 
             android:layout_margin="10dp"
     />
+
+
+
 
     <Button
             android:id="@+id/add_note_button"
@@ -40,7 +44,7 @@
 
             android:layout_marginBottom="40dp"
 
-            android:text="@string/save"
+            android:text="@string/update"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
     />
