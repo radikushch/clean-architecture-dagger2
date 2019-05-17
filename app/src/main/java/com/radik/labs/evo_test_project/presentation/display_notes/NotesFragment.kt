@@ -27,26 +27,28 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
         navController.navigate(R.id.action_notesFragment_to_createNoteFragment, bundle)
     }
 
-    private lateinit var notesViewModel: NotesViewModel
+    private var notesViewModel: NotesViewModel? = null
     private lateinit var notesAdapter: NoteAdapter
 
     override fun layoutRes(): Int = R.layout.notes_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        notesViewModel = ViewModelProviders.of(this, viewModelFactory).get(NotesViewModel::class.java)
+
         init()
     }
 
     private fun init() {
         initRecyclerView()
-        initListeners()
         initLiveData()
+        initListeners()
     }
 
     private fun initLiveData() {
-        notesViewModel.notesLiveData.observe(this, Observer {notes -> updateNotesList(notes) })
-        notesViewModel.progressLiveData.observe(this, Observer { isShown -> displayProgress(isShown) })
+        if(notesViewModel != null) return
+        notesViewModel = ViewModelProviders.of(this, viewModelFactory).get(NotesViewModel::class.java)
+        notesViewModel!!.notesLiveData.observe(this, Observer {notes -> updateNotesList(notes) })
+        notesViewModel!!.progressLiveData.observe(this, Observer { isShown -> displayProgress(isShown) })
     }
 
     private fun displayProgress(isShown: Boolean) {
@@ -66,12 +68,12 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
 
     override fun onStart() {
         super.onStart()
-        notesViewModel.start()
+        notesViewModel?.start()
     }
 
     override fun onStop() {
         super.onStop()
-        notesViewModel.stop()
+        notesViewModel?.stop()
     }
 
     private fun initListeners() {

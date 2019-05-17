@@ -41,7 +41,7 @@ abstract class BaseFragment : DaggerFragment() {
 
     protected fun showProgress() {
         loadingFragment = LoadingFragment()
-        loadingFragment!!.show(fragmentManager, "loading_fragment")
+        loadingFragment!!.show(hostActivity?.supportFragmentManager, "loading_fragment")
 
     }
 
