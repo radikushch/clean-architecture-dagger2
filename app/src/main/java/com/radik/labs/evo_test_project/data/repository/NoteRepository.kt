@@ -1,5 +1,6 @@
 package com.radik.labs.evo_test_project.data.repository
 
+import androidx.paging.DataSource
 import com.radik.labs.evo_test_project.data.database.NoteDao
 import com.radik.labs.evo_test_project.di.scopes.ActivityScope
 import com.radik.labs.evo_test_project.model.Note
@@ -11,7 +12,23 @@ import javax.inject.Inject
 @ActivityScope
 class NoteRepository @Inject constructor(
     private val noteDao: NoteDao
-) : Repository<Note> {
+) : FilterRepository<Note, Int> {
+
+    override fun getBatchNotes(offset: Int, amount: Int): List<Note> {
+        return noteDao.getBatchNotes(offset, amount)
+    }
+
+    override fun getAllPattern(textPattern: String): DataSource.Factory<Int, Note> {
+        return noteDao.getNotesPattern(textPattern)
+    }
+
+    override fun getAllDesc(): DataSource.Factory<Int, Note> {
+       return noteDao.getNotesDesc()
+    }
+
+    override fun getAllAsc(): DataSource.Factory<Int, Note> {
+        return noteDao.getNotesAsc()
+    }
 
 
     override fun remove(item: Note): Completable {

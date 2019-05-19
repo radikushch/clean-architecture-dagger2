@@ -1,5 +1,6 @@
 package com.radik.labs.evo_test_project.di.activity
 
+import com.radik.labs.evo_test_project.data.repository.FilterRepository
 import com.radik.labs.evo_test_project.data.repository.NoteRepository
 import com.radik.labs.evo_test_project.data.repository.Repository
 import com.radik.labs.evo_test_project.di.scopes.ActivityScope
@@ -12,6 +13,6 @@ abstract class RepositoryModule {
 
     @ActivityScope
     @Binds
-    abstract fun bindNoteRepository(noteRepository: NoteRepository): Repository<Note>
+    abstract fun bindNoteRepository(noteRepository: NoteRepository): FilterRepository<Note, Int>
 
 }
