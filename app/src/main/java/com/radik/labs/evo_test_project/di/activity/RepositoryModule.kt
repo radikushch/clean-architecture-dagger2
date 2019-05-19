@@ -15,7 +15,7 @@ abstract class RepositoryModule {
 
     @ActivityScope
     @Binds
-    abstract fun bindNotePagingFilterRepository(noteRepository: PagingNoteRepository): FilterRepository<Note, Int>
+    abstract fun bindNotePagingFilterRepository(noteRepository: PagingNoteRepository): FilterPaginationRepository<Note, Int>
 
     @ActivityScope
     @Binds

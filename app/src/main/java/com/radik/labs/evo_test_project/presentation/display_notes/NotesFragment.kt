@@ -1,7 +1,9 @@
 package com.radik.labs.evo_test_project.presentation.display_notes
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import android.widget.PopupMenu
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,10 +12,10 @@ import com.radik.labs.evo_test_project.R
 import com.radik.labs.evo_test_project.di.scopes.FragmentScope
 import com.radik.labs.evo_test_project.model.Note
 import com.radik.labs.evo_test_project.presentation.base.fragments.NavigationFragment
-import com.radik.labs.evo_test_project.presentation.create_note.CreateNoteFragment
 import com.radik.labs.evo_test_project.presentation.display_notes.adapter.NoteAdapter
 import com.radik.labs.evo_test_project.presentation.edit_note.EditNoteFragment
 import kotlinx.android.synthetic.main.notes_fragment.*
+import kotlinx.android.synthetic.main.notes_fragment_toolbar.*
 
 @FragmentScope
 class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
@@ -77,6 +79,24 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
 
     private fun initListeners() {
         notes_add_button.setOnClickListener { addNoteButtonClick() }
+        notes_sort_button.setOnClickListener { showSortPopUpMenu(it) }
+    }
+
+    private fun showSortPopUpMenu(v: View) {
+        val sortMenu = PopupMenu(hostActivity, v)
+        sortMenu.inflate(R.menu.sort_menu)
+        sortMenu.setOnMenuItemClickListener { item ->
+            when(item.itemId) {
+                R.id.sort_asc -> {
+                    true
+                }
+                R.id.sort_desc -> {
+                    true
+                }
+                else -> false
+            }
+        }
+        sortMenu.show()
     }
 
     private fun addNoteButtonClick() {

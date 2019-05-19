@@ -1,7 +1,6 @@
 package com.radik.labs.evo_test_project.data.repository
 
 import androidx.paging.DataSource
-import androidx.room.Dao
 import com.radik.labs.evo_test_project.data.database.NoteDao
 import com.radik.labs.evo_test_project.model.Note
 import io.reactivex.Completable
@@ -11,7 +10,7 @@ import javax.inject.Inject
 class PagingNoteRepository @Inject constructor(
     private val noteDao: NoteDao,
     private val noteRepository: Repository<Note>
-) : FilterRepository<Note, Int> {
+) : FilterPaginationRepository<Note, Int> {
 
     override fun getAllPattern(textPattern: String): DataSource.Factory<Int, Note> {
         return noteDao.getNotesPattern(textPattern)

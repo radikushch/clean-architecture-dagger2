@@ -3,7 +3,6 @@ package com.radik.labs.evo_test_project.data.database
 import androidx.paging.DataSource
 import androidx.room.*
 import com.radik.labs.evo_test_project.model.Note
-import io.reactivex.Completable
 import io.reactivex.Single
 
 @Dao

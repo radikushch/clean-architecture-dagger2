@@ -30,7 +30,7 @@
     />
 
     <ImageView
-            android:id="@+id/notes_button"
+            android:id="@+id/notes_sort_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
