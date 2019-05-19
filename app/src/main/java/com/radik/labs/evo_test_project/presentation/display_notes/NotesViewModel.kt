@@ -2,8 +2,6 @@ package com.radik.labs.evo_test_project.presentation.display_notes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.radik.labs.evo_test_project.data.repository.FilterPaginationRepository

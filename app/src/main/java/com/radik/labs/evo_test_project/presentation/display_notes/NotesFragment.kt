@@ -1,6 +1,7 @@
 package com.radik.labs.evo_test_project.presentation.display_notes
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
@@ -88,12 +89,18 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
         notes_add_button.setOnClickListener { addNoteButtonClick() }
         notes_sort_button.setOnClickListener { showSortPopUpMenu(it) }
         search_notes_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            private val handler: Handler = Handler()
+
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { notesViewModel?.setFilterPagedList(it) }
+                handler.removeCallbacksAndMessages(null)
+                handler.postDelayed({
+                    newText?.let { notesViewModel?.setFilterPagedList(it) }
+                }, 300)
                 return true
             }
 
