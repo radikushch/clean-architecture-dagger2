@@ -1,16 +1,13 @@
 package com.radik.labs.evo_test_project.presentation.create_note
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.radik.labs.evo_test_project.R
-import com.radik.labs.evo_test_project.model.Note
-import com.radik.labs.evo_test_project.presentation.base.BaseViewModel
-import com.radik.labs.evo_test_project.presentation.base.fragments.BaseFragment
 import com.radik.labs.evo_test_project.presentation.base.fragments.NavigationFragment
-import com.radik.labs.evo_test_project.presentation.edit_note.EditNoteViewModel
 import kotlinx.android.synthetic.main.add_note_fragment.*
 import kotlinx.android.synthetic.main.add_note_fragment_toolbar.*
 
