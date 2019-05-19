@@ -12,7 +12,6 @@ abstract class ActivitiesModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [
         MainActivityFragmentsModule::class,
-        NotesUseCaseModule::class,
         RepositoryModule::class
     ])
     abstract fun bindMainActivity(): MainActivity

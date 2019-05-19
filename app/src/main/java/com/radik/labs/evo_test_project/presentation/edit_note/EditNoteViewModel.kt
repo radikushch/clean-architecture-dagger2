@@ -1,8 +1,7 @@
 package com.radik.labs.evo_test_project.presentation.edit_note
 
 import androidx.lifecycle.MutableLiveData
-import com.radik.labs.evo_test_project.domain.usecases.RemoveUseCase
-import com.radik.labs.evo_test_project.domain.usecases.UpdateUseCase
+import com.radik.labs.evo_test_project.data.repository.Repository
 import com.radik.labs.evo_test_project.model.Note
 import com.radik.labs.evo_test_project.model.StorageResponse
 import com.radik.labs.evo_test_project.presentation.base.BaseViewModel
@@ -12,8 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class EditNoteViewModel @Inject constructor(
-    private val updateUseCase: UpdateUseCase<Note>,
-    private val removeUseCase: RemoveUseCase<Note>
+    private val noteRepository: Repository<Note>
 ) : BaseViewModel() {
 
     private var disposable: Disposable? = null
@@ -36,7 +34,7 @@ class EditNoteViewModel @Inject constructor(
     }
 
     fun removeNote(note: Note) {
-        disposable = removeUseCase.remove(note)
+        disposable = noteRepository.remove(note)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -52,7 +50,7 @@ class EditNoteViewModel @Inject constructor(
     fun updateNote(noteText: String, updatedNote: Note) {
         updatedNote.text = noteText
         updatedNote.createTimeMillis = System.currentTimeMillis()
-        disposable = updateUseCase.update(updatedNote)
+        disposable = noteRepository.update(updatedNote)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

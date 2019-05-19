@@ -2,7 +2,8 @@ package com.radik.labs.evo_test_project.presentation.display_notes
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.radik.labs.evo_test_project.domain.usecases.GetAllUseCase
+import com.radik.labs.evo_test_project.data.repository.NoteRepository
+import com.radik.labs.evo_test_project.data.repository.Repository
 import com.radik.labs.evo_test_project.model.Note
 import com.radik.labs.evo_test_project.presentation.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class NotesViewModel @Inject constructor(
-    private val getAllNotesUseCase: GetAllUseCase<Note>
+    private val noteRepository: Repository<Note>
 ): BaseViewModel() {
 
     private var disposable: Disposable? = null
@@ -23,7 +24,7 @@ class NotesViewModel @Inject constructor(
     }
 
     private fun loadNotes() {
-        disposable = getAllNotesUseCase.getAllNotes()
+        disposable = noteRepository.getAll()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showProgress() }

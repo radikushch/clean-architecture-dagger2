@@ -32,5 +32,4 @@ interface NoteDao {
 
     @Delete
     fun removeNote(note: Note)
-
 }

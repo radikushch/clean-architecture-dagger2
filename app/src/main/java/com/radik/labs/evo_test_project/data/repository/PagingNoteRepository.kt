@@ -13,7 +13,6 @@ class PagingNoteRepository @Inject constructor(
     private val noteRepository: Repository<Note>
 ) : FilterRepository<Note, Int> {
 
-
     override fun getAllPattern(textPattern: String): DataSource.Factory<Int, Note> {
         return noteDao.getNotesPattern(textPattern)
     }
