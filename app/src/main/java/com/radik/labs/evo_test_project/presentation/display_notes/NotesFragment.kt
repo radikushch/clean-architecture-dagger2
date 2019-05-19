@@ -80,7 +80,6 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
                 super.onScrolled(recyclerView, dx, dy)
             }
         })
-        notesViewModel?.initList()
     }
 
     override fun onStart() {
