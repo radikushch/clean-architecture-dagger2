@@ -10,26 +10,9 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @ActivityScope
-class NoteRepository @Inject constructor(
+open class NoteRepository @Inject constructor(
     private val noteDao: NoteDao
-) : FilterRepository<Note, Int> {
-
-    override fun getBatchNotes(offset: Int, amount: Int): List<Note> {
-        return noteDao.getBatchNotes(offset, amount)
-    }
-
-    override fun getAllPattern(textPattern: String): DataSource.Factory<Int, Note> {
-        return noteDao.getNotesPattern(textPattern)
-    }
-
-    override fun getAllDesc(): DataSource.Factory<Int, Note> {
-       return noteDao.getNotesDesc()
-    }
-
-    override fun getAllAsc(): DataSource.Factory<Int, Note> {
-        return noteDao.getNotesAsc()
-    }
-
+) : Repository<Note> {
 
     override fun remove(item: Note): Completable {
         return Completable.create { emitter ->
