@@ -19,6 +19,7 @@ import com.radik.labs.evo_test_project.presentation.display_notes.adapter.NoteAd
 import com.radik.labs.evo_test_project.presentation.display_notes.pagination_adapter.NoteDiffUtilCallback
 import com.radik.labs.evo_test_project.presentation.display_notes.pagination_adapter.NotePagingAdapter
 import com.radik.labs.evo_test_project.presentation.edit_note.EditNoteFragment
+import kotlinx.android.synthetic.main.add_note_fragment.*
 import kotlinx.android.synthetic.main.notes_fragment.*
 import kotlinx.android.synthetic.main.notes_fragment_toolbar.*
 import javax.inject.Inject
@@ -72,6 +73,13 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
         notesAdapter = NotePagingAdapter(noteDiffUtilCallback, this)
         notes_recycler_view.layoutManager = LinearLayoutManager(hostActivity, RecyclerView.VERTICAL, false)
         notes_recycler_view.adapter = notesAdapter
+        notes_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) notes_add_button.hide()
+                else        notes_add_button.show()
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
         notesViewModel?.initList()
     }
 
