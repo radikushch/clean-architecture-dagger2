@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.radik.labs.evo_test_project.data.database.AppDatabase
+import com.radik.labs.evo_test_project.di.activity.PaginationModule
 import com.radik.labs.evo_test_project.di.viewmodel.ViewModelModule
 import dagger.Module
 import dagger.Provides

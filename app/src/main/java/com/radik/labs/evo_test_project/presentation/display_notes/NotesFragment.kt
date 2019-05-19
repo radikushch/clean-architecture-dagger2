@@ -1,11 +1,13 @@
 package com.radik.labs.evo_test_project.presentation.display_notes
 
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.paging.PagedList
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.radik.labs.evo_test_project.R
@@ -13,12 +15,16 @@ import com.radik.labs.evo_test_project.di.scopes.FragmentScope
 import com.radik.labs.evo_test_project.model.Note
 import com.radik.labs.evo_test_project.presentation.base.fragments.NavigationFragment
 import com.radik.labs.evo_test_project.presentation.display_notes.adapter.NoteAdapter
+import com.radik.labs.evo_test_project.presentation.display_notes.pagination_adapter.NoteDiffUtilCallback
+import com.radik.labs.evo_test_project.presentation.display_notes.pagination_adapter.NotePagingAdapter
 import com.radik.labs.evo_test_project.presentation.edit_note.EditNoteFragment
 import kotlinx.android.synthetic.main.notes_fragment.*
 import kotlinx.android.synthetic.main.notes_fragment_toolbar.*
+import javax.inject.Inject
 
-@FragmentScope
 class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
+
+    @Inject lateinit var noteDiffUtilCallback: DiffUtil.ItemCallback<Note>
 
     override fun onNoteClick(note: Note) {
         openEditNoteScreen(note)
@@ -29,7 +35,7 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
     }
 
     private var notesViewModel: NotesViewModel? = null
-    private lateinit var notesAdapter: NoteAdapter
+    private lateinit var notesAdapter: NotePagingAdapter
 
     override fun layoutRes(): Int = R.layout.notes_fragment
 
@@ -48,8 +54,12 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
     private fun initLiveData() {
         if(notesViewModel != null) return
         notesViewModel = ViewModelProviders.of(this, viewModelFactory).get(NotesViewModel::class.java)
-        notesViewModel!!.notesLiveData.observe(this, Observer {notes -> updateNotesList(notes) })
         notesViewModel!!.progressLiveData.observe(this, Observer { isShown -> displayProgress(isShown) })
+        notesViewModel!!.notesPagedListLiveData.observe(this, Observer { pagedList -> setPagedList(pagedList) })
+    }
+
+    private fun setPagedList(pagedList: PagedList<Note>) {
+        notesAdapter.submitList(pagedList)
     }
 
     private fun displayProgress(isShown: Boolean) {
@@ -57,14 +67,11 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
         else        hideProgress()
     }
 
-    private fun updateNotesList(notes: List<Note>) {
-        notesAdapter.swapData(notes.reversed())
-    }
-
     private fun initRecyclerView() {
-        notesAdapter = NoteAdapter(ArrayList(), this)
+        notesAdapter = NotePagingAdapter(noteDiffUtilCallback, this)
         notes_recycler_view.layoutManager = LinearLayoutManager(hostActivity, RecyclerView.VERTICAL, false)
         notes_recycler_view.adapter = notesAdapter
+        notesViewModel?.initList()
     }
 
     override fun onStart() {
@@ -73,13 +80,24 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
     }
 
     override fun onStop() {
-        super.onStop()
         notesViewModel?.stop()
+        super.onStop()
     }
 
     private fun initListeners() {
         notes_add_button.setOnClickListener { addNoteButtonClick() }
         notes_sort_button.setOnClickListener { showSortPopUpMenu(it) }
+        search_notes_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { notesViewModel?.setFilterPagedList(it) }
+                return true
+            }
+
+        })
     }
 
     private fun showSortPopUpMenu(v: View) {
@@ -88,9 +106,11 @@ class NotesFragment : NavigationFragment(), NoteAdapter.OnNoteClickListener {
         sortMenu.setOnMenuItemClickListener { item ->
             when(item.itemId) {
                 R.id.sort_asc -> {
+                    notesViewModel?.setAscPagedList()
                     true
                 }
                 R.id.sort_desc -> {
+                    notesViewModel?.setDescPagedList()
                     true
                 }
                 else -> false
