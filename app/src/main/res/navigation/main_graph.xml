@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/main_graph" app:startDestination="@id/notesFragment">
+
+    <fragment android:id="@+id/createNoteFragment"
+              android:name="com.radik.labs.evo_test_project.presentation.create_note.CreateNoteFragment"
+              android:label="CreateNoteFragment"
+              tools:layout="@layout/add_note_fragment"
+    />
+
+    <fragment android:id="@+id/editNoteFragment"
+              android:name="com.radik.labs.evo_test_project.presentation.edit_note.EditNoteFragment"
+              android:label="EditNoteFragment"
+              tools:layout="@layout/edit_note_fragment"
+    />
+
+    <fragment android:id="@+id/notesFragment"
+              android:name="com.radik.labs.evo_test_project.presentation.display_notes.NotesFragment"
+              android:label="NotesFragment"
+              tools:layout="@layout/notes_fragment"
+    >
+        <action android:id="@+id/action_notesFragment_to_createNoteFragment"
+                app:destination="@id/createNoteFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        />
+
+        <action android:id="@+id/action_notesFragment_to_editNoteFragment"
+                app:destination="@id/editNoteFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"
+        />
+    </fragment>
+</navigation>
